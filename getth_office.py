@@ -27,7 +27,7 @@ def main():
     client = mqtt.Client(clientId)
     client.connect("192.168.1.78", 1883)
     data = read_sensor()
-    print(data)
+    # print(data)
     client.publish("weather/office", str(data), qos = 0, retain = True)
     
 if __name__=='__main__':
