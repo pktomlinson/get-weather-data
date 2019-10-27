@@ -1,3 +1,5 @@
+# python class for obtaining weather data from darksky.net
+# requires darksky.net account and developer API key
 
 # import require libraries / modules
 import urllib3
@@ -16,8 +18,6 @@ class GetWeather:
         3) lon, your decimal coordinate for longitude, such as -81.0123
         4) wunits, ypecification for units. See https:/darksky.net for acceptable values (default is si, or celcius)
 
-        The Printdata function iterates throught the __init__ parsed data and prints it out.
-
     """
     
     def __init__(self, api_key, lat, lon ,wunits):
@@ -27,32 +27,26 @@ class GetWeather:
         self.weather_data = self.http.request('GET', 'https://api.darksky.net/forecast/' + api_key + '/' + lat + ', ' + lon + '/?units=' + wunits)
         # convert returned data to JSON string (UTF-8 encoded)
         self.weather_dict = json.loads(self.weather_data.data.decode('UTF-8'))
-        # create objects self.daily, self.hourly, and self.minutely from daily data
-        # these are sub-arrays of data within self.weather_dict
-        
-        self.daily = self.weather_dict['daily']
-        self.hourly = self.weather_dict['hourly']
-        self.minutely = self.weather_dict['minutely']
 
     def CurrentConditions(self):
         self.current = self.weather_dict['currently']
         self.currentTime = self.current['time']
         self.theTime = datetime.datetime.fromtimestamp(self.currentTime).strftime('%Y-%m-%d %H:%M:%S')
         return(self.current)
-        #print("Current Conditions at: ", self.theTime)
-        #print("Summary:" , self.current['summary'])
-        #print("Temp.: ", self.current['temperature'])
-        #print("Humidity: ", self.current['humidity'] * 100)
-        #print("Pressure: ", self.current['pressure'])        
-        
+
+    def HourlyForecast(self):
+        self.hourly = self.weather_dict['hourly']
+        self.hourly_data = self.hourly['data']
+        return(self.hourly_data)
+
+    def MinutelyForecast(self):
+        self.minutely = self.weather_dict['minutely']
+        self.minutely_data = self.minutely['data']
+        return(self.minutely_data)
+    
     def DailyForecast(self):
         self.daily = self.weather_dict['daily']
         self.daily_data = self.daily['data']
-        #self.dd_entries = len(self.daily_data)       
-        #
-        #for i in range (0, self.dd_entries):
-        #    print(datetime.datetime.fromtimestamp(self.daily_data[i]['time']).strftime('%Y-%m-%d'))
-        #    print(self.daily_data[i]['summary'])
         return(self.daily_data)
     
 
