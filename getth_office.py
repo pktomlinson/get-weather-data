@@ -1,10 +1,10 @@
 #!/usr/bin/python
 #
-# reads data from temperature and humidity sensor
-# using Adafruit_DHT library.
+# reads data from AM2303 temperature and humidity
+# sensor using Adafruit_DHT library.
 # connects to local mqtt broker and broadcasts
 # results
-# 
+#
 # import required modules and libraries
 from datetime import datetime
 import Adafruit_DHT
