@@ -17,6 +17,8 @@ def read_sensor(sensor, pin):
     humidity, temperature = Adafruit_DHT.read_retry(sensor, pin)
     temperature = round(temperature, 1)
     humidity = round(humidity, 1)
+    # +14400 adds 4 hours to GMT to reflect my timezone
+    # that is a bad hack and I should resolve issue with python functionality
     fdatatime = (((datetime.now() - datetime(1970, 1, 1)).total_seconds()) + 14400)
     sdatatime = str(round(fdatatime, 0))[0:-2]
     ret = '{ "datetime:", "' + sdatatime + '", "temperature:"' + str(temperature) +'", "humidity:" , "' + str(humidity) + '" }'
