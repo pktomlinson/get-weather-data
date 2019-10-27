@@ -1,5 +1,10 @@
 #!/usr/bin/python
-
+#
+# reads data from temperature and humidity sensor
+# using Adafruit_DHT library.
+# connects to local mqtt broker and broadcasts
+# results
+# 
 # import required modules and libraries
 from datetime import datetime
 import Adafruit_DHT
@@ -42,5 +47,3 @@ def main():
 # init program
 if __name__=='__main__':
     main()
-
-
